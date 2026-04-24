@@ -27,6 +27,7 @@ import { fixTemplateKey } from '../scripts/codemod/template-key.js'
 import { fixRouter } from '../scripts/codemod/router.js'
 import { fixEnvVars } from '../scripts/codemod/env-vars.js'
 import { fixVDeep } from '../scripts/codemod/v-deep.js'
+import { fixTestUtils } from '../scripts/codemod/test-utils.js'
 import type { CodemodOptions } from '../scripts/types.js'
 import pc from 'picocolors'
 
@@ -40,6 +41,7 @@ type FixerKey =
   | 'router'
   | 'env-vars'
   | 'v-deep'
+  | 'test-utils'
   | 'all'
 
 const cli = cac('vue2to3')
@@ -87,6 +89,9 @@ cli
       'v-deep': async () => {
         await fixVDeep(dir, opts)
       },
+      'test-utils': async () => {
+        await fixTestUtils(dir, opts)
+      },
       all: async () => {
         console.log(pc.bold('\n🚀 执行所有修复...\n'))
         console.log(pc.cyan('Step 1/7: 生命周期钩子'))
@@ -107,6 +112,8 @@ cli
         await fixEnvVars(dir, opts)
         console.log(pc.cyan('\nStep 9/9: CSS 深度选择器 (::v-deep → :deep())'))
         await fixVDeep(dir, opts)
+        console.log(pc.cyan('\nStep 10/10: @vue/test-utils v1 → v2'))
+        await fixTestUtils(dir, opts)
         console.log(pc.bold(pc.green('\n✅ 所有自动修复完成！')))
         console.log(pc.yellow('\n⚠️  请运行 npx vue2to3 check ./src 验证结果'))
         console.log(pc.yellow('⚠️  并检查代码中的 TODO(vue3) 注释，完成剩余人工迁移'))

@@ -313,6 +313,53 @@ const RULES: ScanRule[] = [
     fix: 'v-deep',
     doc: 'references/css-scoped-migration.md',
   },
+
+  // @vue/test-utils v1
+  {
+    id: 'test-utils-propsdata',
+    category: 'Test Utils',
+    severity: 'error',
+    label: 'propsData 选项（test-utils v1）',
+    pattern: /\bpropsData\s*:/g,
+    fix: 'test-utils',
+    doc: 'references/test-utils-migration.md',
+  },
+  {
+    id: 'test-utils-destroy',
+    category: 'Test Utils',
+    severity: 'error',
+    label: 'wrapper.destroy()',
+    pattern: /\.destroy\s*\(\s*\)/g,
+    fix: 'test-utils',
+    doc: 'references/test-utils-migration.md',
+  },
+  {
+    id: 'test-utils-create-local-vue',
+    category: 'Test Utils',
+    severity: 'error',
+    label: 'createLocalVue()',
+    pattern: /\bcreateLocalVue\s*\(\s*\)/g,
+    fix: 'test-utils',
+    doc: 'references/test-utils-migration.md',
+  },
+  {
+    id: 'test-utils-contains',
+    category: 'Test Utils',
+    severity: 'warning',
+    label: 'wrapper.contains()',
+    pattern: /\.contains\s*\(/g,
+    fix: 'test-utils',
+    doc: 'references/test-utils-migration.md',
+  },
+  {
+    id: 'test-utils-set-data',
+    category: 'Test Utils',
+    severity: 'warning',
+    label: 'wrapper.setData()',
+    pattern: /\.setData\s*\(/g,
+    fix: 'test-utils',
+    doc: 'references/test-utils-migration.md',
+  },
 ]
 
 // ─── 扫描单个文件 ────────────────────────────────────────────────────────────
@@ -453,6 +500,9 @@ export const scan = async (
   }
   if (report.summary['CSS Scoped']) {
     report.actionRequired.push('::v-deep / /deep/ / >>> → :deep()（运行 fix v-deep 自动替换）')
+  }
+  if (report.summary['Test Utils']) {
+    report.actionRequired.push('@vue/test-utils v1 → v2（运行 fix test-utils 自动替换，参考 references/test-utils-migration.md）')
   }
 
   // 输出报告
