@@ -1,0 +1,5 @@
+dist/
+node_modules/
+*.bak
+*.vue3.bak
+coverage/

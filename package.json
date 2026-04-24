@@ -1,0 +1,91 @@
+{
+  "name": "skill-vue2-to-vue3",
+  "version": "0.1.0",
+  "description": "一个 Agent Skill，让 AI 助手成为 Vue 2 → Vue 3 迁移专家。包含专家知识库、SOP 工作流和可执行 Codemod。",
+  "keywords": [
+    "vue",
+    "vue2",
+    "vue3",
+    "migration",
+    "codemod",
+    "ai-skill",
+    "claude-skill",
+    "agent-skill",
+    "mcp"
+  ],
+  "license": "MIT",
+  "author": "vue2to3 contributors",
+  "type": "module",
+  "bin": {
+    "vue2to3": "./dist/bin/cli.js"
+  },
+  "main": "./dist/scripts/scan.js",
+  "exports": {
+    "./scan": "./dist/scripts/scan.js",
+    "./check": "./dist/scripts/check.js",
+    "./codemod/lifecycle": "./dist/scripts/codemod/lifecycle.js",
+    "./codemod/global-api": "./dist/scripts/codemod/global-api.js",
+    "./codemod/sync-modifier": "./dist/scripts/codemod/sync-modifier.js",
+    "./codemod/listeners": "./dist/scripts/codemod/listeners.js",
+    "./codemod/filters": "./dist/scripts/codemod/filters.js",
+    "./codemod/template-key": "./dist/scripts/codemod/template-key.js",
+    "./codemod/router": "./dist/scripts/codemod/router.js"
+  },
+  "files": [
+    "dist",
+    "SKILL.md",
+    "references",
+    "templates",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "scan": "node --import tsx/esm scripts/scan.ts",
+    "build": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\" && tsc --project tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build && npm run test",
+    "test": "node --import tsx/esm --test tests/codemod/filters.test.ts tests/codemod/router.test.ts tests/codemod/global-api.test.ts tests/codemod/lifecycle.test.ts tests/codemod/listeners.test.ts tests/codemod/sync-modifier.test.ts tests/codemod/template-key.test.ts tests/scan.test.ts tests/check.test.ts tests/integration/migration-flow.test.ts",
+    "test:watch": "node --import tsx/esm --test --watch tests/codemod/filters.test.ts tests/codemod/router.test.ts tests/codemod/global-api.test.ts tests/codemod/lifecycle.test.ts tests/codemod/listeners.test.ts tests/codemod/sync-modifier.test.ts tests/codemod/template-key.test.ts tests/scan.test.ts tests/check.test.ts",
+    "test:codemod": "node --import tsx/esm --test tests/codemod/filters.test.ts tests/codemod/router.test.ts tests/codemod/global-api.test.ts tests/codemod/lifecycle.test.ts tests/codemod/listeners.test.ts tests/codemod/sync-modifier.test.ts tests/codemod/template-key.test.ts",
+    "test:integration": "node --import tsx/esm --test tests/integration/migration-flow.test.ts",
+    "lint": "eslint scripts tests bin",
+    "lint:fix": "eslint scripts tests bin --fix",
+    "format": "prettier --write scripts tests bin tsconfig.json tsconfig.build.json package.json .prettierrc.json",
+    "format:check": "prettier --check scripts tests bin",
+    "ci": "npm run typecheck && npm run format:check && npm run test"
+  },
+  "dependencies": {
+    "@babel/generator": "^7.25.0",
+    "@babel/parser": "^7.25.0",
+    "@babel/traverse": "^7.25.0",
+    "@vue/compiler-sfc": "^3.4.0",
+    "cac": "^6.7.14",
+    "fast-glob": "^3.3.2",
+    "picocolors": "^1.1.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@types/babel__generator": "^7.6.8",
+    "@types/babel__traverse": "^7.20.6",
+    "@types/node": "^22.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "globals": "^15.0.0",
+    "prettier": "^3.3.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.5.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/skill-vue2-to-vue3.git"
+  },
+  "homepage": "https://github.com/your-org/skill-vue2-to-vue3#readme",
+  "bugs": {
+    "url": "https://github.com/your-org/skill-vue2-to-vue3/issues"
+  }
+}
