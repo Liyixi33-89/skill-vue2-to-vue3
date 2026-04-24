@@ -237,6 +237,82 @@ const RULES: ScanRule[] = [
     fix: null,
     doc: 'references/element-ui-migration.md',
   },
+
+  // 构建工具：Vue CLI → Vite 环境变量
+  {
+    id: 'env-vue-app',
+    category: 'Build Tool',
+    severity: 'error',
+    label: 'process.env.VUE_APP_*',
+    pattern: /process\.env\.VUE_APP_\w+/g,
+    fix: 'env-vars',
+    doc: 'references/build-tool-migration.md',
+  },
+  {
+    id: 'env-node-env',
+    category: 'Build Tool',
+    severity: 'warning',
+    label: 'process.env.NODE_ENV',
+    pattern: /process\.env\.NODE_ENV/g,
+    fix: 'env-vars',
+    doc: 'references/build-tool-migration.md',
+  },
+  {
+    id: 'env-base-url',
+    category: 'Build Tool',
+    severity: 'warning',
+    label: 'process.env.BASE_URL',
+    pattern: /process\.env\.BASE_URL/g,
+    fix: 'env-vars',
+    doc: 'references/build-tool-migration.md',
+  },
+  {
+    id: 'require-call',
+    category: 'Build Tool',
+    severity: 'warning',
+    label: 'require() 调用',
+    pattern: /\brequire\s*\(/g,
+    fix: null,
+    doc: 'references/build-tool-migration.md',
+  },
+  {
+    id: 'require-context',
+    category: 'Build Tool',
+    severity: 'error',
+    label: 'require.context()',
+    pattern: /require\.context\s*\(/g,
+    fix: null,
+    doc: 'references/build-tool-migration.md',
+  },
+
+  // CSS 深度选择器
+  {
+    id: 'v-deep-old',
+    category: 'CSS Scoped',
+    severity: 'error',
+    label: '::v-deep 旧写法',
+    pattern: /::v-deep\b/g,
+    fix: 'v-deep',
+    doc: 'references/css-scoped-migration.md',
+  },
+  {
+    id: 'deep-slash',
+    category: 'CSS Scoped',
+    severity: 'error',
+    label: '/deep/ 旧写法',
+    pattern: /\/deep\//g,
+    fix: 'v-deep',
+    doc: 'references/css-scoped-migration.md',
+  },
+  {
+    id: 'deep-arrow',
+    category: 'CSS Scoped',
+    severity: 'warning',
+    label: '>>> 深度选择器',
+    pattern: />>>/g,
+    fix: 'v-deep',
+    doc: 'references/css-scoped-migration.md',
+  },
 ]
 
 // ─── 扫描单个文件 ────────────────────────────────────────────────────────────
@@ -370,6 +446,13 @@ export const scan = async (
     report.actionRequired.push(
       'Element UI → Element Plus（参考 references/element-ui-migration.md）',
     )
+  }
+  if (report.summary['Build Tool']) {
+    report.actionRequired.push('process.env.VUE_APP_* → import.meta.env.VITE_*（运行 fix env-vars 自动替换）')
+    report.actionRequired.push('require() → import（需人工改写，参考 references/build-tool-migration.md）')
+  }
+  if (report.summary['CSS Scoped']) {
+    report.actionRequired.push('::v-deep / /deep/ / >>> → :deep()（运行 fix v-deep 自动替换）')
   }
 
   // 输出报告

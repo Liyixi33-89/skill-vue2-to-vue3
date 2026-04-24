@@ -1,5 +1,6 @@
 node_modules/
 dist/
+.codebuddy/
 coverage/
 *.vue3.bak
 vue3-migration-report.json
