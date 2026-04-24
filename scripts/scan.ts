@@ -360,6 +360,44 @@ const RULES: ScanRule[] = [
     fix: 'test-utils',
     doc: 'references/test-utils-migration.md',
   },
+
+  // TypeScript 迁移
+  {
+    id: 'ts-class-component',
+    category: 'TypeScript',
+    severity: 'warning',
+    label: 'vue-class-component 装饰器',
+    pattern: /@Component\s*[\({]/g,
+    fix: null,
+    doc: 'references/typescript-migration.md',
+  },
+  {
+    id: 'ts-property-decorator',
+    category: 'TypeScript',
+    severity: 'warning',
+    label: 'vue-property-decorator (@Prop/@Watch/@Emit)',
+    pattern: /@(?:Prop|Watch|Emit|Model|Inject|Provide)\s*[\({]/g,
+    fix: null,
+    doc: 'references/typescript-migration.md',
+  },
+  {
+    id: 'ts-extends-vue',
+    category: 'TypeScript',
+    severity: 'warning',
+    label: 'extends Vue（Class Component）',
+    pattern: /extends\s+Vue\s*\{/g,
+    fix: null,
+    doc: 'references/typescript-migration.md',
+  },
+  {
+    id: 'ts-shims-vue2',
+    category: 'TypeScript',
+    severity: 'warning',
+    label: "import Vue from 'vue'（shims 旧写法）",
+    pattern: /import\s+Vue\s+from\s+['"]vue['"]/g,
+    fix: null,
+    doc: 'references/typescript-migration.md',
+  },
 ]
 
 // ─── 扫描单个文件 ────────────────────────────────────────────────────────────
@@ -503,6 +541,9 @@ export const scan = async (
   }
   if (report.summary['Test Utils']) {
     report.actionRequired.push('@vue/test-utils v1 → v2（运行 fix test-utils 自动替换，参考 references/test-utils-migration.md）')
+  }
+  if (report.summary['TypeScript']) {
+    report.actionRequired.push('Class Component → <script setup>（需人工迁移，参考 references/typescript-migration.md）')
   }
 
   // 输出报告
