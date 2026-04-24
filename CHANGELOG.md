@@ -38,5 +38,5 @@
 - 测试：Node.js 内置 `node:test` + `tsx`
 - 代码质量：ESLint 9 + Prettier 3 + TypeScript strict
 
-[未发布]: https://github.com/your-org/skill-vue2-to-vue3/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/your-org/skill-vue2-to-vue3/releases/tag/v0.1.0
+[未发布]: https://github.com/Liyixi33-89/skill-vue2-to-vue3/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/Liyixi33-89/skill-vue2-to-vue3/releases/tag/v0.1.0

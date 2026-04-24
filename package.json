@@ -82,10 +82,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-org/skill-vue2-to-vue3.git"
+    "url": "git+https://github.com/Liyixi33-89/skill-vue2-to-vue3.git"
   },
-  "homepage": "https://github.com/your-org/skill-vue2-to-vue3#readme",
+  "homepage": "https://github.com/Liyixi33-89/skill-vue2-to-vue3#readme",
   "bugs": {
-    "url": "https://github.com/your-org/skill-vue2-to-vue3/issues"
+    "url": "https://github.com/Liyixi33-89/skill-vue2-to-vue3/issues"
   }
 }
