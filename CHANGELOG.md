@@ -11,6 +11,39 @@
 
 ---
 
+## [0.1.2] - 2026-04-24
+
+### 新增
+- **3 个参考文档（P2 完善度）**：
+  - `references/typescript-migration.md` — TS 配置迁移指南（`tsconfig.json` 对照、Class Component → `<script setup>`、`defineProps/defineEmits` 类型写法、`vue-tsc` 使用）
+  - `references/test-migration.md` — 测试框架迁移指南（Jest → Vitest 完整迁移、API 兼容对照、Mock 写法、Composable 测试最佳实践）
+  - `references/ecosystem-packages.md` — 生态包版本对照表（14 个分类、60+ 个包的完整 Vue 2 → Vue 3 版本对照）
+- **扫描规则新增 4 条（TypeScript 类别）**：检测 `@Component`、`@Prop/@Watch/@Emit`、`extends Vue`、`import Vue from 'vue'` 等 Class Component 写法
+
+---
+
+## [0.1.1] - 2026-04-24
+
+### 新增
+- **3 个新 Codemod**：
+  - `fix env-vars` — `process.env.VUE_APP_*` → `import.meta.env.VITE_*`，同步处理 `.env` 文件前缀重命名
+  - `fix v-deep` — `::v-deep` / `/deep/` / `>>>` → `:deep()`，仅处理 `.vue` 文件 `<style>` 块，精确避免误改模板
+  - `fix test-utils` — `@vue/test-utils` v1 → v2（`propsData→props`、`wrapper.destroy()→unmount()`、`createLocalVue→config.global`、`Wrapper<T>→VueWrapper`）
+- **扫描规则新增 15 条**：覆盖 Build Tool（`process.env`、`require.context`）、CSS Scoped（`::v-deep`、`/deep/`、`>>>`）、Test Utils（`propsData`、`wrapper.destroy`、`createLocalVue`）、TypeScript（`@Component`、`@Prop`、`extends Vue`）
+- **测试用例**：新增 53 个测试用例，总计 160 个，覆盖所有新 codemod 的单元测试
+
+### 修复
+- `fix all` 步骤编号错误（写的 Step 7/7 但实际执行了 10 步）
+- `filter-pipe` 正则误报：`{{ a | 0 }}` 按位或被错误识别为过滤器，现要求 `|` 后为标识符
+- `check` 命令遗漏 `::v-deep` / `process.env.VUE_APP_*` 检查项
+- CLI 版本号硬编码，现从 `package.json` 动态读取
+
+### 文档
+- `SKILL.md` 同步新增的 3 个 codemod 命令和参考文档表
+- 快速参考表补充 `env-vars`、`v-deep`、`test-utils` 迁移对照
+
+---
+
 ## [0.1.0] - 2026-04-24
 
 ### 新增

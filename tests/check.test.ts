@@ -22,6 +22,9 @@ describe('CHECKS — 检查规则完整性', () => {
     assert.ok(labels.includes('$on / $off / $once'))
     assert.ok(labels.includes('new VueRouter()'))
     assert.ok(labels.includes('Vue.observable()'))
+    // 新增检查项
+    assert.ok(labels.includes('process.env.VUE_APP_*'))
+    assert.ok(labels.includes('::v-deep / /deep/'))
   })
 })
 

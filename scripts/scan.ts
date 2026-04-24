@@ -149,7 +149,8 @@ const RULES: ScanRule[] = [
     category: 'Filters',
     severity: 'error',
     label: 'template pipe {{ x | filter }}',
-    pattern: /\{\{[^}]+\|[^}]+\}\}/g,
+    // 要求 | 后紧跟标识符（过滤器名），排除按位或（| 0 / | 1 等纯数字）
+    pattern: /\{\{[^}]+\|\s*[a-zA-Z_$][a-zA-Z0-9_$]*[^}]*\}\}/g,
     fix: 'filters',
     doc: 'references/filters.md',
   },

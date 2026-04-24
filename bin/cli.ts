@@ -16,7 +16,11 @@
  */
 
 import { cac } from 'cac'
+import { createRequire } from 'module'
 import { scan } from '../scripts/scan.js'
+
+const require = createRequire(import.meta.url)
+const { version } = require('../package.json') as { version: string }
 import { check } from '../scripts/check.js'
 import { fixLifecycle } from '../scripts/codemod/lifecycle.js'
 import { fixGlobalApi } from '../scripts/codemod/global-api.js'
@@ -94,23 +98,23 @@ cli
       },
       all: async () => {
         console.log(pc.bold('\n🚀 执行所有修复...\n'))
-        console.log(pc.cyan('Step 1/7: 生命周期钩子'))
+        console.log(pc.cyan('Step 1/10: 生命周期钩子'))
         await fixLifecycle(dir, opts)
-        console.log(pc.cyan('\nStep 2/7: Global API'))
+        console.log(pc.cyan('\nStep 2/10: Global API'))
         await fixGlobalApi(dir, opts)
-        console.log(pc.cyan('\nStep 3/7: .sync 修饰符'))
+        console.log(pc.cyan('\nStep 3/10: .sync 修饰符'))
         await fixSync(dir, opts)
-        console.log(pc.cyan('\nStep 4/7: $listeners'))
+        console.log(pc.cyan('\nStep 4/10: $listeners'))
         await fixListeners(dir, opts)
-        console.log(pc.cyan('\nStep 5/7: Filters'))
+        console.log(pc.cyan('\nStep 5/10: Filters'))
         await fixFilters(dir, opts)
-        console.log(pc.cyan('\nStep 6/7: template-key'))
+        console.log(pc.cyan('\nStep 6/10: template-key'))
         await fixTemplateKey(dir, opts)
-        console.log(pc.cyan('\nStep 7/7: Vue Router'))
+        console.log(pc.cyan('\nStep 7/10: Vue Router'))
         await fixRouter(dir, opts)
-        console.log(pc.cyan('\nStep 8/9: 环境变量 (VUE_APP_ → VITE_)'))
+        console.log(pc.cyan('\nStep 8/10: 环境变量 (VUE_APP_ → VITE_)'))
         await fixEnvVars(dir, opts)
-        console.log(pc.cyan('\nStep 9/9: CSS 深度选择器 (::v-deep → :deep())'))
+        console.log(pc.cyan('\nStep 9/10: CSS 深度选择器 (::v-deep → :deep())'))
         await fixVDeep(dir, opts)
         console.log(pc.cyan('\nStep 10/10: @vue/test-utils v1 → v2'))
         await fixTestUtils(dir, opts)
@@ -141,6 +145,6 @@ cli
 
 // ── help & version ────────────────────────────────────────────────────────────
 cli.help()
-cli.version('0.1.0')
+cli.version(version)
 
 cli.parse()

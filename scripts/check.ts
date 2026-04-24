@@ -18,11 +18,15 @@ const CHECKS: CheckPattern[] = [
   { label: 'destroyed hook', pattern: /(?<!\w)destroyed\s*[(:]/g },
   { label: '.sync modifier', pattern: /\.\bsync\b/g },
   { label: 'filters: {}', pattern: /\bfilters\s*:\s*\{/g },
-  { label: 'pipe filter {{ | }}', pattern: /\{\{[^}]+\|[^}]+\}\}/g },
+  // 修复：要求 | 后紧跟标识符，排除按位或（| 0 等）
+  { label: 'pipe filter {{ | }}', pattern: /\{\{[^}]+\|\s*[a-zA-Z_$][a-zA-Z0-9_$]*[^}]*\}\}/g },
   { label: '$listeners', pattern: /\$listeners\b/g },
   { label: '$on / $off / $once', pattern: /\$on\s*\(|\$off\s*\(|\$once\s*\(/g },
   { label: 'new VueRouter()', pattern: /new\s+VueRouter\s*\(/g },
   { label: 'Vue.observable()', pattern: /\bVue\.observable\s*\(/g },
+  // 补充遗漏项
+  { label: 'process.env.VUE_APP_*', pattern: /process\.env\.VUE_APP_\w+/g },
+  { label: '::v-deep / /deep/', pattern: /::v-deep\b|\/deep\//g },
 ]
 
 export const check = async (targetDir: string): Promise<boolean> => {

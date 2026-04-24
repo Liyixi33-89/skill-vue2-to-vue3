@@ -1,6 +1,6 @@
 {
   "name": "skill-vue2-to-vue3",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "一个 Agent Skill，让 AI 助手成为 Vue 2 → Vue 3 迁移专家。包含专家知识库、SOP 工作流和可执行 Codemod。",
   "keywords": [
     "vue",
